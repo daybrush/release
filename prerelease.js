@@ -25,3 +25,6 @@ shell(`mkdir -p ./demo/release/latest`);
     shell(`cp -a ./${dir}/. ./demo/release/${version}/${dir}`);
     shell(`cp -a ./${dir}/. ./demo/release/latest/${dir}`);
 });
+
+
+exports.version = version;
