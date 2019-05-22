@@ -2,6 +2,8 @@
 'use strict';
 
 const args = require('args');
+const path = require('path');
+const fs = require('fs');
 
 args
     .option('remote', 'Remote to release', "origin")
@@ -23,14 +25,26 @@ shell(`gh-pages -d ./demo --dest=./ ${addFlag} --remote ${flags.remote}`);
 const cwd = process.cwd();
 const gitignore = fs.readFileSync(path.resolve(cwd, ".gitignore"), { encoding: "utf8" });
 const releaseIgnore = gitignore.replace(/^dist(\/)*$/mg, "");
-
+const isRemoveDist = gitignore !== releaseIgnore;
 // has dist
-if (gitignore !== releaseIgnore) {
+if (isRemoveDist) {
     fs.writeFileSync(path.resolve(cwd, ".gitignore"), releaseIgnore, { encoding: "utf8" });
 }
 
 shell(`git add ./`);
-shell(`git commit -am "chore: Release ${version}`);
-shell(`git tag -d ${version}`);
+shell(`git commit -am "chore: Release ${version}"`);
+try {
+    shell(`git tag -d ${version}`);
+} catch(e) {
+
+}
 shell(`git tag ${version}`);
 shell(`git push ${flags.remote} ${version}`);
+
+if (isRemoveDist) {
+    // restore gitignore
+    fs.writeFileSync(path.resolve(cwd, ".gitignore"), gitignore, { encoding: "utf8" });
+    shell("git rm -rf dist/");
+    shell("git add ./");
+    shell(`git commit -am "chore: Release ${version}"`);
+}
