@@ -39,7 +39,7 @@ try {
 
 }
 shell(`git tag ${version}`);
-shell(`git push ${flags.remote} ${version}`);
+shell(`git push ${flags.remote} ${version} -f`);
 
 if (isRemoveDist) {
     // restore gitignore
