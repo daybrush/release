@@ -47,5 +47,5 @@ if (isRemoveDist) {
     shell("git rm -rf dist/");
     shell("git add ./");
     shell(`git commit -am "chore: Release ${version}"`);
-    shell(`npm run build"`);
+    shell(`npm run build`);
 }
