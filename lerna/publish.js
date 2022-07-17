@@ -86,6 +86,8 @@ exports.publishPackages = async ({ ignore, tag, commit }) => {
             return true;
         } else if (result.type === PUBLISH_RESULT_TYPE.NO_CHANGED) {
             log.notice(`No changed package: ${name}`);
+        } else {
+            log.notice(`Pass package: ${name}`);
         }
         return false;
     }).length;
