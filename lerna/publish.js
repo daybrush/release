@@ -41,7 +41,7 @@ exports.publishPackages = async ({ ignore, tag, commit }) => {
         const publishPath = path.resolve(pkg.location, customPublichPath || "");
         const json = require(path.resolve(publishPath, "./package.json"));
 
-        if (tags.indexOf(`${json.name}@${json.version}`) >= 0) {
+        if (tags.indexOf(`${json.name}@${json.version}`) === 0) {
             // already release
             return {
                 name: pkg.name,
