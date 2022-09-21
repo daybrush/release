@@ -44,6 +44,7 @@ Example call:
     `)
     .option("--base <string>", "The name of the base package from which to get version information", "")
     .option("--init", "Whether to initialize all files in the gh-pages branch", false)
+    .option("--pre", "Whether to build only without deploying", false)
     .option("--remote <string>", "The remote name that manages the repository", "origin")
     .option("--src <string>", "Folder path to deploy to gh-pages", "./demo")
     .option("--dest <string>", "Destination folder path deployed to gh-pages", "./")

@@ -10,6 +10,7 @@ exports.deploy = async ({
     remote,
     src,
     dest,
+    pre,
 }) => {
     const project = new Project();
     const packages = await getPackages();
@@ -30,11 +31,13 @@ exports.deploy = async ({
     });
     const flag = init ? "" : "--add";
 
-    try {
-        execa.sync("gh-pages", ["-d", src, `--dest=${dest}`, flag, "--remote", remote]);
-        log.notice(`Succeeded deploy`);
-    } catch (e) {
-        log.error(`Failed to deploy`);
-        console.log(e);
+    if (!pre) {
+        try {
+            execa.sync("gh-pages", ["-d", src, `--dest=${dest}`, flag, "--remote", remote]);
+            log.notice(`Succeeded deploy`);
+        } catch (e) {
+            log.error(`Failed to deploy`);
+            console.log(e);
+        }
     }
 }
