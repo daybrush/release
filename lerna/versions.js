@@ -60,7 +60,7 @@ async function updateVersion(pkgName, graph, packageMap) {
         if (
             isUpdatePrerelease
             && isBasePrelease
-            && (!isUpdateMajor && !isUpdateMajor && !isUpdatePatch)
+            && (!isUpdateMajor && !isUpdateMinor && !isUpdatePatch)
             && parentSemver.prerelease[1] > dependencySemver.prerelease[1]
         ) {
             isIncreamentPrerelease = true;
@@ -83,7 +83,7 @@ async function updateVersion(pkgName, graph, packageMap) {
             releaseType = "prerelease";
         }
     }
-    if (isBasePrelease && (isUpdateMajor || isUpdateMajor || isUpdatePatch)) {
+    if (isBasePrelease && (isUpdateMajor || isUpdateMinor || isUpdatePatch)) {
         releaseType = `pre${releaseType}`;
     }
 
